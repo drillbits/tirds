@@ -12,15 +12,32 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-import sys
+import argparse
 
-from tirds import backup
+from tirds import download
 
 
 def main():
-    with open(sys.argv[1], 'r') as fp:
-        entities = backup.parse_backup_info_file(fp)
-        original_backup_info = entities.next()
-        print original_backup_info
-        for entity in entities:
-            print entity
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+
+    download_parser = subparsers.add_parser(
+        'download',
+        help='Download backup_info from Google Cloud Storage.')
+    download_parser.add_argument(
+        'handle',
+        help='File handle for the backup_info, in the format /gs/[BUCKET_NAME]/*.backup_info.')
+    download_parser.add_argument(
+        '--out', dest='outdir',
+        help='Write backup files to OUTDIR.')
+    download_parser.add_argument(
+        '--key-file', dest='keyfile', required=True,
+        help='Path to the private key file.')
+    download_parser.set_defaults(func=download.download)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == '__main__':
+    main()

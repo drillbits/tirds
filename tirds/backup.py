@@ -16,6 +16,15 @@ from google.appengine.api import datastore
 from google.appengine.api.files import records
 
 
+def split_handle(handle):
+    """Returns bucket name and blob name from gs file handle."""
+    if not handle.startswith('/gs/'):
+        raise ValueError("handle must start with '/gs/' prefix.")
+    path = handle[len('/gs/'):]
+    i = path.rindex('/')
+    return path[:i], path[i+1:]
+
+
 def parse_backup_info_file(fp):
     """Returns entities iterator from a backup_info file."""
     reader = records.RecordsReader(fp)
