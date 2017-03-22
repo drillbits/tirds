@@ -44,6 +44,7 @@ setup(
     keywords='appengine gae datastore backup restore',
     packages=find_packages(exclude=['tests']),
     install_requires=[
+        'appengine-sdk',  # TODO: unofficial `pip install`-able appengine SDK.
         'google-cloud-storage',
         'pyyaml',
     ],
