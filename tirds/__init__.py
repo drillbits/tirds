@@ -12,14 +12,16 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-import os
-import sys
+# TODO: Could not resolve ImportError: No module named appengine.api when import backup.py.
+# drillbits/tirds#1
+# import os
+# import sys
 
-sdk_home = os.getenv(
-    'APPENGINE_SDK',
-    # default
-    os.path.join(os.environ['HOME'], 'google-cloud-sdk', 'platform', 'google_appengine'))
+# sdk_home = os.getenv(
+#     'APPENGINE_SDK',
+#     # default
+#     os.path.join(os.environ['HOME'], 'google-cloud-sdk', 'platform', 'google_appengine'))
 
-sys.path.append(sdk_home)
-import pkg_resources # noqa
-pkg_resources.declare_namespace('google')
+# sys.path.append(sdk_home)
+# import pkg_resources # noqa
+# pkg_resources.declare_namespace('google')
