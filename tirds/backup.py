@@ -12,15 +12,14 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
-import sys
+from google.appengine.api import datastore
+from google.appengine.api.files import records
 
-from tirds import backup
 
-
-def main():
-    with open(sys.argv[1], 'r') as fp:
-        entities = backup.parse_backup_info_file(fp)
-        original_backup_info = entities.next()
-        print original_backup_info
-        for entity in entities:
-            print entity
+def parse_backup_info_file(fp):
+    """Returns entities iterator from a backup_info file."""
+    reader = records.RecordsReader(fp)
+    version = reader.read()
+    if version != '1':
+        raise IOError('Unsupported version')
+    return (datastore.Entity.FromPb(record) for record in reader)

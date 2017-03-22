@@ -11,3 +11,15 @@
 #    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
+
+import os
+import sys
+
+sdk_home = os.getenv(
+    'APPENGINE_SDK',
+    # default
+    os.path.join(os.environ['HOME'], 'google-cloud-sdk', 'platform', 'google_appengine'))
+
+sys.path.append(sdk_home)
+import pkg_resources # noqa
+pkg_resources.declare_namespace('google')
