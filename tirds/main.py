@@ -15,6 +15,7 @@
 import argparse
 
 from tirds import download
+from tirds import upload
 
 
 def main():
@@ -34,6 +35,20 @@ def main():
         '--key-file', dest='keyfile', required=True,
         help='Path to the private key file.')
     download_parser.set_defaults(func=download.download)
+
+    upload_parser = subparsers.add_parser(
+        'upload',
+        help='Upload backup_info to Google Cloud Storage.')
+    upload_parser.add_argument(
+        'srcdir',
+        help='Upload backup files in srcdir.')
+    upload_parser.add_argument(
+        'bucket',
+        help='Upload backup files to bucket.')
+    upload_parser.add_argument(
+        '--key-file', dest='keyfile', required=True,
+        help='Path to the private key file.')
+    upload_parser.set_defaults(func=upload.upload)
 
     args = parser.parse_args()
     args.func(args)

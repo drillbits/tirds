@@ -35,8 +35,8 @@ def download(args):
         os.makedirs(outdir)
     logger.info("download backup to %s", outdir)
 
-    backup_info_filename = _download(storage_client, bucket_name, blob_name, outdir)
-    with open(backup_info_filename, 'r') as fp:
+    backup_info_filepath = _download(storage_client, bucket_name, blob_name, outdir)
+    with open(backup_info_filepath, 'r') as fp:
         entities = backup.parse_backup_info_file(fp)
         entities.next()  # skip backup_info
         for entity in entities:

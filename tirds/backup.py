@@ -12,6 +12,8 @@
 #    See the License for the specific language governing permissions and
 #    limitations under the License.
 
+from copy import deepcopy
+
 from google.appengine.api import datastore
 from google.appengine.api.files import records
 
@@ -32,3 +34,29 @@ def parse_backup_info_file(fp):
     if version != '1':
         raise IOError('Unsupported version')
     return (datastore.Entity.FromPb(record) for record in reader)
+
+
+def write_backup_info(backup_info, blob_files, fp):
+    with records.RecordsWriter(fp) as writer:
+        writer.write('1')
+        writer.write(backup_info.ToPb().SerializeToString())
+        for kind_backup_files in blob_files:
+            writer.write(kind_backup_files.ToPb().SerializeToString())
+
+
+def convert_bucket(backup_info, blob_files, new_bucket_name):
+    new_backup_info = deepcopy(backup_info)
+
+    org_bucket_name, blob_name = split_handle(backup_info['gs_handle'])
+    new_backup_info['gs_handle'] = '/gs/{0}/{1}'.format(new_bucket_name, blob_name)
+
+    new_blob_files = []
+    for kind_backup_files in blob_files:
+        new_kind_backup_files = deepcopy(kind_backup_files)
+        new_files = [
+            f.replace(org_bucket_name, new_bucket_name)
+            for f in kind_backup_files['files']]
+        new_kind_backup_files['files'] = new_files
+        new_blob_files.append(new_kind_backup_files)
+
+    return new_backup_info, new_blob_files
