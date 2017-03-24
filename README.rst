@@ -40,6 +40,10 @@ Download a backup from Google Cloud Storage.
 
 You can get ``handle`` from datastore admin.
 
+.. image:: https://raw.githubusercontent.com/drillbits/tirds/master/doc/datastore_admin.png
+
+.. image:: https://raw.githubusercontent.com/drillbits/tirds/master/doc/datastore_admin_backup_info.png
+
 ``KEYFILE`` is a path to the private key file for Service Account.
 
 -------------
