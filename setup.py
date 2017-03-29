@@ -48,6 +48,10 @@ setup(
         'google-cloud-storage',
         'pyyaml',
     ],
+    tests_require=[
+        'pytest',
+        'mock',
+    ],
     extras_require={},
     entry_points={
         'console_scripts': [
