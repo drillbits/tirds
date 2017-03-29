@@ -23,7 +23,9 @@ def split_handle(handle):
     if not handle.startswith('/gs/'):
         raise ValueError("handle must start with '/gs/' prefix.")
     path = handle[len('/gs/'):]
-    i = path.rindex('/')
+    i = path.rfind('/')
+    if i < 0:
+        raise ValueError("handle has no blob name.")
     return path[:i], path[i+1:]
 
 
