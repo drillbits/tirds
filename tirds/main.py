@@ -24,30 +24,30 @@ def main():
 
     download_parser = subparsers.add_parser(
         'download',
-        help='Download backup_info from Google Cloud Storage.')
+        help="Download the backup files from Google Cloud Storage.")
     download_parser.add_argument(
         'handle',
-        help='File handle for the backup_info, in the format /gs/[BUCKET_NAME]/*.backup_info.')
+        help="File handle for the backup_info, in the format `/gs/[BUCKET_NAME]/*.backup_info`.")
     download_parser.add_argument(
         '--out', dest='outdir',
-        help='Write backup files to OUTDIR.')
+        help="Write the backup files to OUTDIR.")
     download_parser.add_argument(
         '--key-file', dest='keyfile', required=True,
-        help='Path to the private key file.')
+        help="Path to the private key file of the Google service account.")
     download_parser.set_defaults(func=download.download)
 
     upload_parser = subparsers.add_parser(
         'upload',
-        help='Upload backup_info to Google Cloud Storage.')
+        help="Upload the backup files to Google Cloud Storage.")
     upload_parser.add_argument(
         'srcdir',
-        help='Upload backup files in srcdir.')
+        help="Upload the backup files in the srcdir.")
     upload_parser.add_argument(
         'bucket',
-        help='Upload backup files to bucket.')
+        help="Upload the backup files to the bucket.")
     upload_parser.add_argument(
         '--key-file', dest='keyfile', required=True,
-        help='Path to the private key file.')
+        help="Path to the private key file of the Google service account.")
     upload_parser.set_defaults(func=upload.upload)
 
     args = parser.parse_args()
