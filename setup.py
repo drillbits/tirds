@@ -22,7 +22,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.rst')) as fp:
     long_description = fp.read()
 
-version = '0.0.1'
+version = '0.0.2'
 
 setup(
     name='tirds',
